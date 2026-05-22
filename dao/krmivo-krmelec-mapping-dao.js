@@ -17,27 +17,20 @@ function get(mappingId) {
 
 // Method to write a mapping to a file
 function create(mapping) {
-  console.error('1')
   try {
-    console.error('2')
     const mappingList = list();
-    console.error('3')
     if (mappingList.some((item) =>
         item.krmelecId === mapping.krmelecId
         && item.krmivoId === mapping.krmivoId)) {
-      console.error('4')
       throw {
         code: "mappingAlreadyExists",
         message: "Tahle kombinace krmiva a krmeliste jiz existuje."
       };
     }
-    console.error('5')
     mapping.id = crypto.randomBytes(16).toString("hex");
     if (!mapping.value) {
-      console.error('6')
     mapping.value = "prazdno"
   }
-      console.error('7')
     const filePath = path.join(mappingFolderPath, `${mapping.id}.json`);
     const fileData = JSON.stringify(mapping);
     fs.writeFileSync(filePath, fileData, "utf8");
@@ -63,7 +56,7 @@ function update(krmivo) {
     }
 
     const newKrmivo = { ...currentKrmivo, ...krmivo };
-    const filePath = path.join(krmivoFolderPath, `${krmivo.id}.json`);
+    const filePath = path.join(mappingFolderPath, `${krmivo.id}.json`);
     const fileData = JSON.stringify(newKrmivo);
     fs.writeFileSync(filePath, fileData, "utf8");
     return newKrmivo;

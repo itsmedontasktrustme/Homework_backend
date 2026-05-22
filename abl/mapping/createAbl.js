@@ -2,13 +2,15 @@ const Ajv = require("ajv");
 const ajv = new Ajv(); // options can be passed, e.g. {allErrors: true}
 
 const mappingDao = require("../../dao/krmivo-krmelec-mapping-dao");
+const krmelecDao = require("../../dao/krmelec-dao");
+const krmivoDao = require("../../dao/krmivo-dao");
 
 const schema = {
   type: "object",
   properties: {
     krmelecId: { type: "string",},
     krmivoId: { type: "string",},
-    stateId: { type: "string",},
+    value: { type: "string",},
   },
   required: ["krmelecId", "krmivoId"],
   additionalProperties: false,
@@ -27,6 +29,16 @@ function createAbl(req, res) {
 
     data.krmelecId = data.krmelecId.trim();
     data.krmivoId = data.krmivoId.trim();
+
+    const krmelec = krmelecDao.get(data.krmelecId);
+    if (!krmelec) {
+      return res.status(404).json({ error: "krmelecNotFound", message: `Krmelec with id '${data.krmelecId}' not found` });
+    }
+
+    const krmivo = krmivoDao.get(data.krmivoId);
+    if (!krmivo) {
+      return res.status(404).json({ error: "krmivoNotFound", message: `Krmivo with id '${data.krmivoId}' not found` });
+    }
 
     const mapping = mappingDao.create(data);
 
