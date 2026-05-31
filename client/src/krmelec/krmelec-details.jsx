@@ -53,7 +53,7 @@ function KrmelecDetail({
                         disabled={!(itemList?.length === 0)}
                         title={itemList?.length === 0 ? "" : "Nejdrive odeber krmiva"}
                     >
-                        Smazat krmelec {krmelec.name}
+                        Smazat krmelec
                     </Button>
                 </div>
             </Accordion.Body>
