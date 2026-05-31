@@ -10,7 +10,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<KrmelecDashboard />} />
-            <Route path="/krmelec" element={<KrmelecDashboard />} />
             <Route path="/krmiva" element={<Krmiva />} />
           </Route>
         </Routes>
