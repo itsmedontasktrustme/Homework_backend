@@ -7,7 +7,7 @@ import { mdiPencilOutline, mdiClose } from "@mdi/js";
 
 function KrmivoItem({
   item,
-  setTransactionItemFormData,
+  setkrmelecCreateDialog,
   setTransactionItemDeleteDialog,
 }) {
   return (
@@ -27,7 +27,7 @@ function KrmivoItem({
                 className="border-0 p-1"
                 variant="outline-primary"
                 size="sm"
-                onClick={() => setTransactionItemFormData(item)}
+                onClick={() => setkrmelecCreateDialog(item)}
               >
                 <Icon path={mdiPencilOutline} size={0.8} />
               </Button>

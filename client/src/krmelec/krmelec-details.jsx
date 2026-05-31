@@ -10,9 +10,11 @@ function KrmelecDetail({
                             name,
                             itemList = [],
                             onDelete, // function provided by parent
+                            krmelec,
                            setkrmivoMappingUpdateDialog,
                            setKrmivoMappingDeleteDialog,
                            setkrmivoMappingCreateDialog,
+                           setKrmelecDeleteDialog,
                         }) {
 
     return (
@@ -23,7 +25,6 @@ function KrmelecDetail({
                 </Stack>
             </Accordion.Header>
             <Accordion.Body style={{ display: "flex", flexDirection: "column" }}>
-                {/* growable content area */}
                 <div style={{ flex: 1 }}>
                     {itemList?.length > 0 ? (
                         itemList.map((item) => (
@@ -40,10 +41,19 @@ function KrmelecDetail({
                     )}
                 </div>
 
-                {/* footer - always at the bottom */}
-                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8 }}>
+                <div style={{ display: "flex", justifyContent: "flex-end", marginTop: 8, gap: 8}}>
                     <Button size="sm" variant="outline-primary" onClick={() => setkrmivoMappingCreateDialog(eventKey)}>
                         Přidat krmivo
+                    </Button>
+                    <Button
+                        size="sm"
+                        variant="outline-primary"
+                        style={{ borderColor: "red", color: "red" }}
+                        onClick={() => setKrmelecDeleteDialog(krmelec)}
+                        disabled={!(itemList?.length === 0)}
+                        title={itemList?.length === 0 ? "" : "Nejdrive odeber krmiva"}
+                    >
+                        Smazat krmelec {krmelec.name}
                     </Button>
                 </div>
             </Accordion.Body>

@@ -119,6 +119,30 @@ function KrmelecListProvider({ children }) {
     return {ok: result.ok, error: result.ok ? undefined : result.data};
   }
 
+  async function handleDeleteKrmelec(dtoIn) {
+    setTransactionListDto((current) => {
+      return { ...current, state: "pending", pendingId: dtoIn.id };
+    });
+    const result = await FetchHelper.krmelec.delete({"id": dtoIn.id});
+
+    setTransactionListDto((current) => {
+      if (result.ok) {
+
+        handleLoad();
+
+        return {
+          ...current,
+          state: "ready",
+          data: { ...current.data, itemList: current.data.itemList.slice() },
+          error: null,
+        };
+      } else {
+        return { ...current, state: "error", error: result.data };
+      }
+    });
+    return { ok: result.ok, error: result.ok ? undefined : result.data };
+  }
+
   async function handleDeleteMapping(dtoIn) {
     setTransactionListDto((current) => {
       return { ...current, state: "pending", pendingId: dtoIn.id };
@@ -176,6 +200,7 @@ function KrmelecListProvider({ children }) {
       handleDeleteMapping,
       handleUpdateKrmivoMapping,
       handleCreateMapping,
+      handleDeleteKrmelec,
     },
   };
 

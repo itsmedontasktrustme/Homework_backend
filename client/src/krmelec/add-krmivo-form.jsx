@@ -64,16 +64,6 @@ function KrmivoMappingCreateForm({ item, onClose }) {
 
             ): <div>Žádná krmiva nejsou k dizpoci, vytvořte nová, abyste je mohli přidat</div>}
 
-
-          {/*<Form.Label>Hodnota</Form.Label>*/}
-          {/*<Form.Control*/}
-          {/*  type="text"*/}
-          {/*  name="value"*/}
-          {/*  defaultValue={item?.value}*/}
-          {/*  disabled={state === "pending"}*/}
-          {/*  required*/}
-          {/*/>*/}
-
         </Modal.Body>
         <Modal.Footer>
           <Button

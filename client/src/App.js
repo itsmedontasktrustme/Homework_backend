@@ -19,7 +19,4 @@ function App() {
   );
 }
 
- // TODO
-// to je fakt vse???
-// ne, jeste smaz krmelec
 export default App;

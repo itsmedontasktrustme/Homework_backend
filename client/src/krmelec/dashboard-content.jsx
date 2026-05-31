@@ -11,14 +11,15 @@ import { mdiCashPlus } from "@mdi/js";
 
 import { TransactionListContext } from "./krmelec-list-provider";
 import PendingItem from "./pending-item";
-import TransactionItemForm from "./transaction-item-form";
+import KrmelecCreateForm from "./krmelec-create-form";
 import MappingDeleteDialog from "./mapping-delete-dialog";
 import KrmelecDetails from "./krmelec-details";
 import KrmivoMappingUpdateForm from "./krmivo-mapping-update-form";
 import KrmivoMappingCreateForm from "./add-krmivo-form";
+import DeleteKrmelecConfirmationDialog from "./delete-krmelec-confirmation-dialog";
 
 function DashboardContent() {
-  const [transactionItemFormData, setKrmelecItemFormData] = useState();
+  const [krmelecCreateDialog, setKrmelecCreateDialog] = useState();
 
   const [krmivoMappingDeleteDialog, setkrmivoMappingDeleteDialog] =
       useState();
@@ -27,6 +28,9 @@ function DashboardContent() {
       useState();
 
   const [krmivoMappingCreateDialog, setkrmivoMappingCreateDialog] =
+      useState();
+
+  const [krmelecDeleteDialog, setKrmelecDeleteDialog] =
       useState();
 
   const { state, data, selectedMonth, setSelectedMonth } = useContext(
@@ -50,10 +54,10 @@ function DashboardContent() {
 
   return (
       <Card className="border-0 ">
-        {!!transactionItemFormData ? (
-            <TransactionItemForm
-                item={transactionItemFormData}
-                onClose={() => setKrmelecItemFormData()}
+        {!!krmelecCreateDialog ? (
+            <KrmelecCreateForm
+                item={krmelecCreateDialog}
+                onClose={() => setKrmelecCreateDialog()}
             />
         ) : null}
         {!!krmivoMappingDeleteDialog ? (
@@ -74,6 +78,12 @@ function DashboardContent() {
                 onClose={() => setkrmivoMappingCreateDialog()}
             />
         ) : null}
+        {!!krmelecDeleteDialog ? (
+            <DeleteKrmelecConfirmationDialog
+                item={krmelecDeleteDialog}
+                onClose={() => setKrmelecDeleteDialog()}
+            />
+        ) : null}
         <Card.Header
             className="sticky-top "
             bsPrefix="bg-white"
@@ -87,7 +97,7 @@ function DashboardContent() {
                   size="sm"
                   disable={state === "pending" ? undefined: 'not-undefined'}
                   p={2}
-                  onClick={() => setKrmelecItemFormData({})}
+                  onClick={() => setKrmelecCreateDialog({})}
               >
                 <Icon path={mdiCashPlus} size={0.8} /> Přidat krmelec
               </Button>
@@ -129,9 +139,11 @@ function DashboardContent() {
                                         categoryId={entry.categoryId}
                                         name={entry.name}
                                         itemList={entry.krmivoList}
+                                        krmelec={entry}
                                         setkrmivoMappingUpdateDialog={setkrmivoMappingUpdateDialog}
                                         setKrmivoMappingDeleteDialog={setkrmivoMappingDeleteDialog}
                                         setkrmivoMappingCreateDialog={setkrmivoMappingCreateDialog}
+                                        setKrmelecDeleteDialog={setKrmelecDeleteDialog}
                                     />
                                 );
                             })}

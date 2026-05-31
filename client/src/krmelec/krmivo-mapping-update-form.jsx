@@ -51,24 +51,6 @@ function KrmivoMappingUpdateForm({ item, onClose }) {
             required
           />
 
-          {/*<Form.Label>Kategorie</Form.Label>*/}
-          {/*<Form.Select*/}
-          {/*  type="select"*/}
-          {/*  name="categoryId"*/}
-          {/*  defaultValue={item?.categoryId}*/}
-          {/*  disabled={state === "pending"}*/}
-          {/*  required*/}
-          {/*>*/}
-          {/*  {data?.categoryMap*/}
-          {/*    ? Object.keys(data.categoryMap).map((categoryId) => {*/}
-          {/*        return (*/}
-          {/*          <option key={categoryId} value={categoryId}>*/}
-          {/*            {data.categoryMap[categoryId].name}*/}
-          {/*          </option>*/}
-          {/*        );*/}
-          {/*      })*/}
-          {/*    : null}*/}
-          {/*</Form.Select>*/}
         </Modal.Body>
         <Modal.Footer>
           <Button

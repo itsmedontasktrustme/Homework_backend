@@ -7,7 +7,7 @@ import Alert from "react-bootstrap/Alert";
 
 import { TransactionListContext } from "./krmelec-list-provider.jsx";
 
-function TransactionItemForm({ item, onClose }) {
+function KrmelecCreateForm({ item, onClose }) {
   const { state, data, error, handlerMap } = useContext(TransactionListContext);
 
   return (
@@ -50,24 +50,6 @@ function TransactionItemForm({ item, onClose }) {
             required
           />
 
-          {/*<Form.Label>Kategorie</Form.Label>*/}
-          {/*<Form.Select*/}
-          {/*  type="select"*/}
-          {/*  name="categoryId"*/}
-          {/*  defaultValue={item?.categoryId}*/}
-          {/*  disabled={state === "pending"}*/}
-          {/*  required*/}
-          {/*>*/}
-          {/*  {data?.categoryMap*/}
-          {/*    ? Object.keys(data.categoryMap).map((categoryId) => {*/}
-          {/*        return (*/}
-          {/*          <option key={categoryId} value={categoryId}>*/}
-          {/*            {data.categoryMap[categoryId].name}*/}
-          {/*          </option>*/}
-          {/*        );*/}
-          {/*      })*/}
-          {/*    : null}*/}
-          {/*</Form.Select>*/}
         </Modal.Body>
         <Modal.Footer>
           <Button
@@ -90,4 +72,4 @@ function TransactionItemForm({ item, onClose }) {
   );
 }
 
-export default TransactionItemForm;
+export default KrmelecCreateForm;
