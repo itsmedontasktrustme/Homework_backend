@@ -1,8 +1,10 @@
+const { listByKrmelecId } = require("./krmivo-krmelec-mapping-dao");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
 
 const krmelecFolderPath = path.join(__dirname, "storage", "krmelecList");
+const mappingFolderPath = path.join(__dirname, "storage", "mappingList");
 
 function get(krmelecId) {
   try {
@@ -81,7 +83,13 @@ function list() {
         path.join(krmelecFolderPath, file),
         "utf8"
       );
-      return JSON.parse(fileData);
+      let krmelecJson = JSON.parse(fileData);
+      const mapping = listByKrmelecId(krmelecJson['id'])
+      console.log(mapping);
+      krmelecJson['krmivoList'] = mapping;
+
+      return krmelecJson;
+
     });
     return krmelecList;
   } catch (error) {

@@ -1,6 +1,8 @@
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const krmivoDao = require("./krmivo-dao");
+
 
 const mappingFolderPath = path.join(__dirname, "storage", "mappingList");
 
@@ -103,7 +105,15 @@ function listByKrmivoId(krmivoId) {
 // Method to list mappings by krmelec
 function listByKrmelecId(krmelecId) {
   const mappingList = list();
-  return mappingList.filter((item) => item.krmelecId === krmelecId);
+
+  const filteredMappings = mappingList.filter((item) => item.krmelecId === krmelecId);
+  for (let i = 0; i < filteredMappings.length; i++) {
+    const krmivo = krmivoDao.get(filteredMappings[i]['krmivoId']);
+    console.log(krmivo['name']);
+    filteredMappings[i]['name'] = krmivo['name'];
+  }
+  // return filteredMappings.filter((item) => item.krmelecId === krmelecId);
+  return filteredMappings;
 }
 
 module.exports = {
