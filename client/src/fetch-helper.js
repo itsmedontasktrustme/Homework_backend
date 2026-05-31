@@ -24,14 +24,11 @@ const baseUri = "http://localhost:3000";
 
 const FetchHelper = {
   krmelec: {
-    get: async (dtoIn) => {
-      return await Call(baseUri, "krmelec/get", dtoIn, "get");
+    list: async (dtoIn) => {
+      return await Call(baseUri, "krmelec/list", dtoIn, "get");
     },
     create: async (dtoIn) => {
       return await Call(baseUri, "krmelec/create", dtoIn, "post");
-    },
-    createMapping: async (dtoIn) => {
-      return await Call(baseUri, "mapping/create", dtoIn, "post");
     },
     update: async (dtoIn) => {
       return await Call(baseUri, "krmelec/update", dtoIn, "post");
@@ -39,14 +36,14 @@ const FetchHelper = {
     delete: async (dtoIn) => {
       return await Call(baseUri, "krmelec/delete", dtoIn, "post");
     },
+    createMapping: async (dtoIn) => {
+      return await Call(baseUri, "mapping/create", dtoIn, "post");
+    },
     updateKrmivoMapping: async (dtoIn) => {
       return await Call(baseUri, "mapping/update", dtoIn, "post");
     },
     deleteKrmivoMapping: async (dtoIn) => {
       return await Call(baseUri, "mapping/delete", dtoIn, "post");
-    },
-    list: async (dtoIn) => {
-      return await Call(baseUri, "krmelec/list", dtoIn, "get");
     },
   },
 };
