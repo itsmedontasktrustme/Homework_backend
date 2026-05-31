@@ -7,8 +7,8 @@ import { mdiPencilOutline, mdiClose } from "@mdi/js";
 
 function KrmivoItem({
   item,
-  setTransactionItemFormData,
-  setTransactionItemDeleteDialog,
+  setkrmivoMappingUpdateDialog,
+  setKrmivoMappingDeleteDialog,
 }) {
   return (
     <Col>
@@ -21,7 +21,7 @@ function KrmivoItem({
                 className="border-0 p-1"
                 variant="outline-primary"
                 size="sm"
-                onClick={() => setTransactionItemFormData(item)}
+                onClick={() => setkrmivoMappingUpdateDialog(item)}
               >
                 <Icon path={mdiPencilOutline} size={0.8} />
               </Button>
@@ -29,7 +29,7 @@ function KrmivoItem({
                 className="border-0 p-1"
                 variant="outline-danger"
                 size="sm"
-                onClick={() => setTransactionItemDeleteDialog(item)}
+                onClick={() => setKrmivoMappingDeleteDialog(item)}
               >
                 <Icon path={mdiClose} size={0.8} />
               </Button>

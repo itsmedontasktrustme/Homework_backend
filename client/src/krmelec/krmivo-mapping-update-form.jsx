@@ -7,7 +7,7 @@ import Alert from "react-bootstrap/Alert";
 
 import { TransactionListContext } from "./krmelec-list-provider.jsx";
 
-function TransactionItemForm({ item, onClose }) {
+function KrmivoMappingUpdateForm({ item, onClose }) {
   const { state, data, error, handlerMap } = useContext(TransactionListContext);
 
   return (
@@ -22,9 +22,10 @@ function TransactionItemForm({ item, onClose }) {
 
           let result;
           if (item?.id) {
-            result = await handlerMap.handleUpdate({
+            result = await handlerMap.handleUpdateKrmivoMapping({
               id: item.id,
-              ...values,
+              parentId: item.krmelecId,
+              value: values.value,
             });
           } else {
             result = await handlerMap.handleCreate({ ...values });
@@ -35,17 +36,17 @@ function TransactionItemForm({ item, onClose }) {
         }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{item?.id ? "Upravit" : "Přidat"} krmelec</Modal.Title>
+          <Modal.Title>{item?.id ? "Upravit" : "Přidat"} krmivo pro krmelec</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {state === "error" ? (
             <Alert variant={"danger"}>{error}</Alert>
           ) : null}
-          <Form.Label>Název krmelce</Form.Label>
+          <Form.Label column="foo">Hodnota</Form.Label>
           <Form.Control
             type="text"
-            name="name"
-            defaultValue={item?.name}
+            name="value"
+            defaultValue={item?.value}
             disabled={state === "pending"}
             required
           />
@@ -90,4 +91,4 @@ function TransactionItemForm({ item, onClose }) {
   );
 }
 
-export default TransactionItemForm;
+export default KrmivoMappingUpdateForm;

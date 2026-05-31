@@ -4,22 +4,27 @@ import { useContext, useMemo, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
-import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 
 import Icon from "@mdi/react";
-import { mdiCashPlus, mdiSigma } from "@mdi/js";
+import { mdiCashPlus } from "@mdi/js";
 
 import { TransactionListContext } from "./krmelec-list-provider";
 import PendingItem from "./pending-item";
 import TransactionItemForm from "./transaction-item-form";
 import MappingDeleteDialog from "./mapping-delete-dialog";
 import KrmelecDetails from "./krmelec-details";
+import KrmivoMappingUpdateForm from "./krmivo-mapping-update-form";
 
 function DashboardContent() {
   const [transactionItemFormData, setKrmelecItemFormData] = useState();
-  const [transactionItemDeleteDialog, setTransactionItemDeleteDialog] =
+
+  const [krmivoMappingDeleteDialog, setkrmivoMappingDeleteDialog] =
       useState();
+
+  const [krmivoMappingUpdateDialog, setkrmivoMappingUpdateDialog] =
+      useState();
+
   const { state, data, selectedMonth, setSelectedMonth } = useContext(
       TransactionListContext
   );
@@ -36,8 +41,6 @@ function DashboardContent() {
         result.krmelecEntries.push(item);
     });
 
-    console.log(result);
-
     return result;
   }, [data]);
 
@@ -49,10 +52,16 @@ function DashboardContent() {
                 onClose={() => setKrmelecItemFormData()}
             />
         ) : null}
-        {!!transactionItemDeleteDialog ? (
+        {!!krmivoMappingDeleteDialog ? (
             <MappingDeleteDialog
-                item={transactionItemDeleteDialog}
-                onClose={() => setTransactionItemDeleteDialog()}
+                item={krmivoMappingDeleteDialog}
+                onClose={() => setkrmivoMappingDeleteDialog()}
+            />
+        ) : null}
+        {!!krmivoMappingUpdateDialog ? (
+            <KrmivoMappingUpdateForm
+                item={krmivoMappingUpdateDialog}
+                onClose={() => setkrmivoMappingUpdateDialog()}
             />
         ) : null}
         <Card.Header
@@ -66,7 +75,7 @@ function DashboardContent() {
                   id="myButton"
                   variant="success"
                   size="sm"
-                  disable={state === "pending"}
+                  disable={state === "pending" ? undefined: 'not-undefined'}
                   p={2}
                   onClick={() => setKrmelecItemFormData({})}
               >
@@ -92,7 +101,7 @@ function DashboardContent() {
                         ></div>
                       </Stack>
                     </Card.Title>
-                    <Card.Text>
+                    <div>
                         <Accordion
                             activeKey={activeKey}
                             onSelect={(selectedKey) =>
@@ -110,13 +119,13 @@ function DashboardContent() {
                                         categoryId={entry.categoryId}
                                         name={entry.name}
                                         itemList={entry.krmivoList}
-                                        setTransactionItemFormData={setKrmelecItemFormData}
-                                        setTransactionItemDeleteDialog={setTransactionItemDeleteDialog}
+                                        setkrmivoMappingUpdateDialog={setkrmivoMappingUpdateDialog}
+                                        setKrmivoMappingDeleteDialog={setkrmivoMappingDeleteDialog}
                                     />
                                 );
                             })}
                         </Accordion>
-                    </Card.Text>
+                    </div>
                   </Card.Body>
                 </Card>
               </div>

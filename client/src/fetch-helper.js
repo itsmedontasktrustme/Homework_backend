@@ -36,6 +36,12 @@ const FetchHelper = {
     delete: async (dtoIn) => {
       return await Call(baseUri, "krmelec/delete", dtoIn, "post");
     },
+    updateKrmivoMapping: async (dtoIn) => {
+      return await Call(baseUri, "mapping/update", dtoIn, "post");
+    },
+    deleteKrmivoMapping: async (dtoIn) => {
+      return await Call(baseUri, "mapping/delete", dtoIn, "post");
+    },
     list: async (dtoIn) => {
       return await Call(baseUri, "krmelec/list", dtoIn, "get");
     },

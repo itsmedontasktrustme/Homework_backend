@@ -9,8 +9,8 @@ function KrmelecDetail({
                             name,
                             itemList = [],
                             onDelete, // function provided by parent
-                            setTransactionItemFormData,
-                            setTransactionItemDeleteDialog,
+                           setkrmivoMappingUpdateDialog,
+                           setKrmivoMappingDeleteDialog,
                         }) {
 
     return (
@@ -27,8 +27,8 @@ function KrmelecDetail({
                         <Row>
                             <KrmivoItem
                                 item={item}
-                                setTransactionItemFormData={setTransactionItemFormData}
-                                setTransactionItemDeleteDialog={setTransactionItemDeleteDialog}
+                                setkrmivoMappingUpdateDialog={setkrmivoMappingUpdateDialog}
+                                setKrmivoMappingDeleteDialog={setKrmivoMappingDeleteDialog}
                             />
                         </Row>
                     ))

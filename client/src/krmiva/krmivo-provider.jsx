@@ -74,9 +74,8 @@ const KrmivoProvider = ({ children }) => {
     }
   };
 
-  // TODO this is not used to deleted mapping!
+  // TODO this is not used to delete mapping!
   const handleDelete = async (id) => {
-    console.log('PRDELEC')
     setState("deleting_" + id);
     const response = await fetch("/mapping/delete", {
       method: "POST",

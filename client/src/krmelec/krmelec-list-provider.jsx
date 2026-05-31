@@ -1,4 +1,4 @@
-import {createContext, useState, useEffect, useContext} from "react";
+import {createContext, useEffect, useState} from "react";
 
 import FetchHelper from "../fetch-helper.js";
 
@@ -15,7 +15,6 @@ function KrmelecListProvider({ children }) {
   });
 
   async function handleLoad() {
-    console.log('handling load')
     setTransactionListDto((current) => {
       return { ...current, data: undefined, state: "pending" };
     });
@@ -44,7 +43,6 @@ function KrmelecListProvider({ children }) {
     setTransactionListDto((current) => {
       if (result.ok) {
         current.data.itemList.push(result.data);
-        console.log("its ok")
         return {
           ...current,
           state: "ready",
@@ -88,11 +86,54 @@ function KrmelecListProvider({ children }) {
     return { ok: result.ok, error: result.ok ? undefined : result.data };
   }
 
+  async function handleUpdateKrmivoMapping(dtoIn) {
+    setTransactionListDto((current) => {
+      return {...current, state: "pending", pendingId: dtoIn.id};
+    });
+
+    const result = await FetchHelper.krmelec.updateKrmivoMapping(
+        {
+          id: dtoIn.id,
+          value: dtoIn.value
+        }
+    );
+
+    setTransactionListDto((current) => {
+      if (result.ok) {
+        const krmelecIndex = current.data.itemList.findIndex(
+            (item) => item.id === dtoIn.parentId
+        );
+
+        const krmivoIndex = current.data.itemList[krmelecIndex]['krmivoList'].findIndex(
+            (item) => item.id === dtoIn.id
+        );
+
+        current.data.itemList[krmelecIndex]['krmivoList'][krmivoIndex]['value'] = dtoIn.value;
+
+        return {
+          ...current,
+          state: "ready",
+          data: {...current.data, itemList: current.data.itemList.slice()},
+          error: null,
+          pendingId: undefined,
+        };
+      } else {
+        return {
+          ...current,
+          state: "error",
+          error: result.data,
+          pendingId: undefined,
+        };
+      }
+    });
+    return {ok: result.ok, error: result.ok ? undefined : result.data};
+  }
+
   async function handleDelete(dtoIn) {
     setTransactionListDto((current) => {
       return { ...current, state: "pending", pendingId: dtoIn.id };
     });
-    const result = await FetchHelper.krmelec.delete({"id": dtoIn.id});
+    const result = await FetchHelper.krmelec.deleteKrmivoMapping({"id": dtoIn.id});
 
     setTransactionListDto((current) => {
       if (result.ok) {
@@ -122,7 +163,13 @@ function KrmelecListProvider({ children }) {
     ...transactionListDto,
     selectedMonth,
     setSelectedMonth,
-    handlerMap: { handleLoad, handleCreate, handleUpdate, handleDelete },
+    handlerMap: {
+      handleLoad,
+      handleCreate,
+      handleUpdate,
+      handleDelete,
+      handleUpdateKrmivoMapping
+    },
   };
 
   return (

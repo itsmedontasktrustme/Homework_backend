@@ -19,4 +19,8 @@ function App() {
   );
 }
 
+ // TODO
+// rename krmelec
+// add krmelec-krmivo mapping
+// to je fakt vse???
 export default App;
