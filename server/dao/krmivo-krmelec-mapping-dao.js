@@ -109,7 +109,6 @@ function listByKrmelecId(krmelecId) {
   const filteredMappings = mappingList.filter((item) => item.krmelecId === krmelecId);
   for (let i = 0; i < filteredMappings.length; i++) {
     const krmivo = krmivoDao.get(filteredMappings[i]['krmivoId']);
-    console.log(krmivo['name']);
     filteredMappings[i]['name'] = krmivo['name'];
   }
   // return filteredMappings.filter((item) => item.krmelecId === krmelecId);

@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import {createContext, useState, useEffect, useContext} from "react";
 
 import FetchHelper from "../fetch-helper.js";
 
@@ -40,10 +40,11 @@ function KrmelecListProvider({ children }) {
     setTransactionListDto((current) => {
       return { ...current, state: "pending" };
     });
-    const result = await FetchHelper.transaction.create(dtoIn);
+    const result = await FetchHelper.krmelec.create(dtoIn);
     setTransactionListDto((current) => {
       if (result.ok) {
         current.data.itemList.push(result.data);
+        console.log("its ok")
         return {
           ...current,
           state: "ready",
@@ -51,17 +52,17 @@ function KrmelecListProvider({ children }) {
           error: null,
         };
       } else {
-        return { ...current, state: "error", error: result.data };
+        return { ...current, state: "error", error: result.data.error };
       }
     });
-    return { ok: result.ok, error: result.ok ? undefined : result.data };
+    return { ok: result.ok, error: result.data.error ? undefined : "create failed" };
   }
 
   async function handleUpdate(dtoIn) {
     setTransactionListDto((current) => {
       return { ...current, state: "pending", pendingId: dtoIn.id };
     });
-    const result = await FetchHelper.transaction.update(dtoIn);
+    const result = await FetchHelper.krmelec.update(dtoIn);
     setTransactionListDto((current) => {
       if (result.ok) {
         const itemIndex = current.data.itemList.findIndex(
@@ -91,7 +92,7 @@ function KrmelecListProvider({ children }) {
     setTransactionListDto((current) => {
       return { ...current, state: "pending", pendingId: dtoIn.id };
     });
-    const result = await FetchHelper.transaction.delete({"id": dtoIn.id});
+    const result = await FetchHelper.krmelec.delete({"id": dtoIn.id});
 
     setTransactionListDto((current) => {
       if (result.ok) {

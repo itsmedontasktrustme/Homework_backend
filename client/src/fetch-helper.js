@@ -23,23 +23,6 @@ async function Call(baseUri, useCase, dtoIn, method) {
 const baseUri = "http://localhost:3000";
 
 const FetchHelper = {
-  transaction: {
-    get: async (dtoIn) => {
-      return await Call(baseUri, "transaction/get", dtoIn, "get");
-    },
-    create: async (dtoIn) => {
-      return await Call(baseUri, "krmelec/create", dtoIn, "post");
-    },
-    update: async (dtoIn) => {
-      return await Call(baseUri, "transaction/update", dtoIn, "post");
-    },
-    delete: async (dtoIn) => {
-      return await Call(baseUri, "mapping/delete", dtoIn, "post");
-    },
-    list: async (dtoIn) => {
-      return await Call(baseUri, "krmelec/list", dtoIn, "get");
-    },
-  },
   krmelec: {
     get: async (dtoIn) => {
       return await Call(baseUri, "krmelec/get", dtoIn, "get");

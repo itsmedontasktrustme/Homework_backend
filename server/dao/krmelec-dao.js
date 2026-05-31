@@ -17,7 +17,7 @@ function get(krmelecId) {
   }
 }
 
-const krmelecSeStejnymJmenemUzExistuje = "Krmelec se stejnym jmenem uz existuje,";
+const krmelecSeStejnymJmenemUzExistuje = "Krmelec se stejnym jmenem uz existuje.";
 function create(krmelec) {
   try {
     const krmelecList = list();
@@ -85,7 +85,6 @@ function list() {
       );
       let krmelecJson = JSON.parse(fileData);
       const mapping = listByKrmelecId(krmelecJson['id'])
-      console.log(mapping);
       krmelecJson['krmivoList'] = mapping;
 
       return krmelecJson;

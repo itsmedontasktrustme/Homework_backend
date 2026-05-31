@@ -35,11 +35,11 @@ function TransactionItemForm({ item, onClose }) {
         }}
       >
         <Modal.Header closeButton>
-          <Modal.Title>{item?.id ? "Update" : "Add"} transaction</Modal.Title>
+          <Modal.Title>{item?.id ? "Upravit" : "Přidat"} krmelec</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           {state === "error" ? (
-            <Alert variant={"danger"}>{error.message}</Alert>
+            <Alert variant={"danger"}>{error}</Alert>
           ) : null}
           <Form.Label>Název</Form.Label>
           <Form.Control
