@@ -17,7 +17,6 @@ async function GetAbl(req, res) {
     const reqParams = req.query?.id ? req.query : req.body;
 
 
-    console.log(reqParams);
     // validate input
     const valid = ajv.validate(schema, reqParams);
     if (!valid) {

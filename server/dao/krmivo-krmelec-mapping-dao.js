@@ -122,5 +122,5 @@ module.exports = {
   remove,
   list,
   listByKrmivoId,
-  listByKrmelecId
+  listByKrmelecId,
 };

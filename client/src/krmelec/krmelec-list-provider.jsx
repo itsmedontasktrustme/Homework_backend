@@ -42,7 +42,7 @@ function KrmelecListProvider({ children }) {
     const result = await FetchHelper.krmelec.create(dtoIn);
     setTransactionListDto((current) => {
       if (result.ok) {
-        current.data.itemList.push(result.data);
+        handleLoad();
         return {
           ...current,
           state: "ready",
@@ -63,10 +63,8 @@ function KrmelecListProvider({ children }) {
     const result = await FetchHelper.krmelec.update(dtoIn);
     setTransactionListDto((current) => {
       if (result.ok) {
-        const itemIndex = current.data.itemList.findIndex(
-          (item) => item.id === dtoIn.id
-        );
-        current.data.itemList[itemIndex] = dtoIn;
+
+        handleLoad();
         return {
           ...current,
           state: "ready",
@@ -100,15 +98,7 @@ function KrmelecListProvider({ children }) {
 
     setTransactionListDto((current) => {
       if (result.ok) {
-        const krmelecIndex = current.data.itemList.findIndex(
-            (item) => item.id === dtoIn.parentId
-        );
-
-        const krmivoIndex = current.data.itemList[krmelecIndex]['krmivoList'].findIndex(
-            (item) => item.id === dtoIn.id
-        );
-
-        current.data.itemList[krmelecIndex]['krmivoList'][krmivoIndex]['value'] = dtoIn.value;
+        handleLoad();
 
         return {
           ...current,
@@ -129,7 +119,7 @@ function KrmelecListProvider({ children }) {
     return {ok: result.ok, error: result.ok ? undefined : result.data};
   }
 
-  async function handleDelete(dtoIn) {
+  async function handleDeleteMapping(dtoIn) {
     setTransactionListDto((current) => {
       return { ...current, state: "pending", pendingId: dtoIn.id };
     });
@@ -137,15 +127,9 @@ function KrmelecListProvider({ children }) {
 
     setTransactionListDto((current) => {
       if (result.ok) {
-        const krmelecIndex = current.data.itemList.findIndex(
-          (item) => item.id === dtoIn.parentId
-        );
 
-        const krmivoIndex = current.data.itemList[krmelecIndex]['krmivoList'].findIndex(
-            (item) => item.id === dtoIn.id
-        );
+        handleLoad();
 
-        current.data.itemList[krmelecIndex]['krmivoList'].splice(krmivoIndex, 1);
         return {
           ...current,
           state: "ready",
@@ -159,6 +143,28 @@ function KrmelecListProvider({ children }) {
     return { ok: result.ok, error: result.ok ? undefined : result.data };
   }
 
+  async function handleCreateMapping(dtoIn) {
+    setTransactionListDto((current) => {
+      return { ...current, state: "pending" };
+    });
+    const result = await FetchHelper.krmelec.createMapping(dtoIn);
+    setTransactionListDto((current) => {
+      if (result.ok) {
+        handleLoad()
+
+        return {
+          ...current,
+          state: "ready",
+          data: { ...current.data, itemList: current.data.itemList.slice() },
+          error: null,
+        };
+      } else {
+        return { ...current, state: "error", error: result.data.error };
+      }
+    });
+    return { ok: result.ok, error: result.data.error ? undefined : "create failed" };
+  }
+
   const value = {
     ...transactionListDto,
     selectedMonth,
@@ -167,8 +173,9 @@ function KrmelecListProvider({ children }) {
       handleLoad,
       handleCreate,
       handleUpdate,
-      handleDelete,
-      handleUpdateKrmivoMapping
+      handleDeleteMapping,
+      handleUpdateKrmivoMapping,
+      handleCreateMapping,
     },
   };
 

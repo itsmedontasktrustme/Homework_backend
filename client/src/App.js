@@ -20,7 +20,6 @@ function App() {
 }
 
  // TODO
-// rename krmelec
-// add krmelec-krmivo mapping
 // to je fakt vse???
+// ne, jeste smaz krmelec
 export default App;

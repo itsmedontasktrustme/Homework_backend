@@ -30,6 +30,9 @@ const FetchHelper = {
     create: async (dtoIn) => {
       return await Call(baseUri, "krmelec/create", dtoIn, "post");
     },
+    createMapping: async (dtoIn) => {
+      return await Call(baseUri, "mapping/create", dtoIn, "post");
+    },
     update: async (dtoIn) => {
       return await Call(baseUri, "krmelec/update", dtoIn, "post");
     },
@@ -44,24 +47,6 @@ const FetchHelper = {
     },
     list: async (dtoIn) => {
       return await Call(baseUri, "krmelec/list", dtoIn, "get");
-    },
-  },
-
-  category: {
-    get: async (dtoIn) => {
-      return await Call(baseUri, "category/get", dtoIn, "get");
-    },
-    create: async (dtoIn) => {
-      return await Call(baseUri, "category/create", dtoIn, "post");
-    },
-    update: async (dtoIn) => {
-      return await Call(baseUri, "category/update", dtoIn, "post");
-    },
-    delete: async (dtoIn) => {
-      return await Call(baseUri, "category/delete", dtoIn, "post");
-    },
-    list: async () => {
-      return await Call(baseUri, "category/list", null, "get");
     },
   },
 };

@@ -7,10 +7,7 @@ const KrmivoProvider = ({ children }) => {
   const [error, setError] = useState();
   const [state, setState] = useState();
 
-  console.log(state);
 
-
-  // TODO
   const fetchKrmivas = async () => {
     setState("loading");
     const response = await fetch("/krmivo/list");
@@ -96,7 +93,6 @@ const KrmivoProvider = ({ children }) => {
       setState("success");
     } else {
       setError(responseData['message']);
-      console.log(responseData)
       setState("errorDeleting");
     }
   };
@@ -111,7 +107,7 @@ const KrmivoProvider = ({ children }) => {
           handleCreate,
           handleUpdate,
           handleDelete,
-          fetchKrmivas: fetchKrmivas,
+          fetchKrmivas,
         },
       }}
     >

@@ -15,6 +15,7 @@ import TransactionItemForm from "./transaction-item-form";
 import MappingDeleteDialog from "./mapping-delete-dialog";
 import KrmelecDetails from "./krmelec-details";
 import KrmivoMappingUpdateForm from "./krmivo-mapping-update-form";
+import KrmivoMappingCreateForm from "./add-krmivo-form";
 
 function DashboardContent() {
   const [transactionItemFormData, setKrmelecItemFormData] = useState();
@@ -23,6 +24,9 @@ function DashboardContent() {
       useState();
 
   const [krmivoMappingUpdateDialog, setkrmivoMappingUpdateDialog] =
+      useState();
+
+  const [krmivoMappingCreateDialog, setkrmivoMappingCreateDialog] =
       useState();
 
   const { state, data, selectedMonth, setSelectedMonth } = useContext(
@@ -64,6 +68,12 @@ function DashboardContent() {
                 onClose={() => setkrmivoMappingUpdateDialog()}
             />
         ) : null}
+        {!!krmivoMappingCreateDialog ? (
+            <KrmivoMappingCreateForm
+                item={krmivoMappingCreateDialog}
+                onClose={() => setkrmivoMappingCreateDialog()}
+            />
+        ) : null}
         <Card.Header
             className="sticky-top "
             bsPrefix="bg-white"
@@ -94,7 +104,7 @@ function DashboardContent() {
                   <Card.Body>
                     <Card.Title>
                       <Stack direction="horizontal" gap={1}>
-                        Aktivní krmeliště
+                        Seznam krmelců
                         <div
                             className="ms-auto"
                             style={{ display: "flex", alignItems: "center" }}
@@ -114,13 +124,14 @@ function DashboardContent() {
 
                                 return (
                                     <KrmelecDetails
-                                        key={eventKey}                    // important for React
-                                        eventKey={eventKey}               // ← must match
+                                        key={entry.id}                    // important for React
+                                        eventKey={entry.id}               // ← must match
                                         categoryId={entry.categoryId}
                                         name={entry.name}
                                         itemList={entry.krmivoList}
                                         setkrmivoMappingUpdateDialog={setkrmivoMappingUpdateDialog}
                                         setKrmivoMappingDeleteDialog={setkrmivoMappingDeleteDialog}
+                                        setkrmivoMappingCreateDialog={setkrmivoMappingCreateDialog}
                                     />
                                 );
                             })}

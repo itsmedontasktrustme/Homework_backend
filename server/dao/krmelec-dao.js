@@ -1,4 +1,7 @@
 const { listByKrmelecId } = require("./krmivo-krmelec-mapping-dao");
+const { listAvailableKrmivo } = require("./krmivo-dao");
+
+
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
@@ -78,19 +81,22 @@ function remove(krmelecId) {
 function list() {
   try {
     const files = fs.readdirSync(krmelecFolderPath);
-    const krmelecList = files.map((file) => {
+    return files.map((file) => {
       const fileData = fs.readFileSync(
-        path.join(krmelecFolderPath, file),
-        "utf8"
+          path.join(krmelecFolderPath, file),
+          "utf8"
       );
       let krmelecJson = JSON.parse(fileData);
       const mapping = listByKrmelecId(krmelecJson['id'])
       krmelecJson['krmivoList'] = mapping;
 
+      const usedKrmivoIds = Array.from(new Set(mapping.map((e) => e['krmivoId'])));
+
+      krmelecJson['availableKrmivoList'] = listAvailableKrmivo(usedKrmivoIds);
+
       return krmelecJson;
 
     });
-    return krmelecList;
   } catch (error) {
     throw { code: "failedToListKmelec", message :error.message };
   }

@@ -35,7 +35,7 @@ function MappingDeleteDialog({ item, onClose }) {
           variant="danger"
           disabled={state === "pending"}
           onClick={async () => {
-            const result = await handlerMap.handleDelete({ id: item.id, parentId: item.krmelecId });
+            const result = await handlerMap.handleDeleteMapping({ id: item.id, parentId: item.krmelecId });
             if (result.ok) {
               onClose();
             } else {

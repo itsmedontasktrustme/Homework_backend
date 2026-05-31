@@ -89,10 +89,30 @@ function list() {
   }
 }
 
+function listAvailableKrmivo(usedKrmivoIds) {
+  let krmivoList = list();
+
+  if (!usedKrmivoIds) return krmivoList;
+
+  krmivoList = krmivoList.filter(
+      (item) => !Object.prototype.hasOwnProperty.call(usedKrmivoIds, item.id)
+  );
+
+  let availableKrmivoList = [];
+  for (i = 0; i < krmivoList.length; i++) {
+    if (!(usedKrmivoIds.includes(krmivoList[i]['id']))) {
+      availableKrmivoList.push(krmivoList[i]);
+    }
+  }
+
+  return availableKrmivoList;
+}
+
 module.exports = {
   get,
   create,
   update,
   remove,
   list,
+  listAvailableKrmivo,
 };

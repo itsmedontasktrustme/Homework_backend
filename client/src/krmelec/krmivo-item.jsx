@@ -3,7 +3,7 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 
 import Icon from "@mdi/react";
-import { mdiPencilOutline, mdiClose } from "@mdi/js";
+import {mdiClose, mdiPencilOutline} from "@mdi/js";
 
 function KrmivoItem({
   item,
